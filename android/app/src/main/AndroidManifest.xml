@@ -1,0 +1,61 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+      CALL_PHONE is required by TelephonyManager.sendUssdRequest(). It is a
+      "dangerous" permission — requested at runtime by UssdModule, not just
+      granted from this declaration. See docs/ANDROID-USSD-LIMITATIONS.md
+      for what this permission does and does not entitle the app to do
+      (it does NOT let the app place voice calls or answer calls).
+    -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <!--
+      READ_PHONE_STATE is required to enumerate SIM slots/subscriptions for
+      multi-SIM support (SimUtils.kt, getSimSlots()). Also requested at
+      runtime. The app functions without it — SIM selection just falls back
+      to slot indices with no carrier-name/display metadata.
+    -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <application
+      android:name=".MainApplication"
+      android:label="@string/app_name"
+      android:icon="@mipmap/ic_launcher"
+      android:roundIcon="@mipmap/ic_launcher_round"
+      android:allowBackup="false"
+      android:theme="@style/AppTheme"
+      android:usesCleartextTraffic="${usesCleartextTraffic}"
+      android:supportsRtl="true">
+      <activity
+        android:name=".MainActivity"
+        android:label="@string/app_name"
+        android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+        android:launchMode="singleTask"
+        android:windowSoftInputMode="adjustResize"
+        android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+      </activity>
+
+      <!--
+        Accessibility Mode (see docs/ACCESSIBILITY-TRANSPORT.md). Must be
+        turned on manually by the user in system Settings — no app can
+        enable its own accessibility service. BIND_ACCESSIBILITY_SERVICE is
+        required by the platform for any accessibility service, regardless
+        of what it actually does.
+      -->
+      <service
+        android:name=".UssdAccessibilityService"
+        android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+        android:exported="true">
+        <intent-filter>
+            <action android:name="android.accessibilityservice.AccessibilityService" />
+        </intent-filter>
+        <meta-data
+            android:name="android.accessibilityservice"
+            android:resource="@xml/accessibility_service_config" />
+      </service>
+    </application>
+</manifest>

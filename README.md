@@ -264,3 +264,4 @@ use `@react-native/jest-preset` (already a devDependency) with
   application/activity shells (unmodified from the current RN template
   except for the one `UssdPackage()` registration line).
 # ussd-ui-as-button
+# ussd-ui-as-button

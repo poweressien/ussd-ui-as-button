@@ -1,0 +1,37 @@
+name: Build APK
+
+# Runs on every push and can also be started by hand (Actions tab -> Build APK -> Run workflow).
+# The finished APK appears at the bottom of the run page under "Artifacts".
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Install JS dependencies
+        run: npm ci
+
+      - name: Build debug APK (installable straight away, JS bundled inside)
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ussd-ui-apk
+          path: android/app/build/outputs/apk/debug/*.apk

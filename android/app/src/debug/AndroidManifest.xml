@@ -1,0 +1,8 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!-- DEBUG BUILDS ONLY. The release (Play Store) build has no network permission at all. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Developer convenience: after `adb shell pm grant <pkg> android.permission.WRITE_SECURE_SETTINGS`
+         the app can restart its own Accessibility service. Not shipped to users. -->
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" tools:ignore="ProtectedPermissions" />
+</manifest>

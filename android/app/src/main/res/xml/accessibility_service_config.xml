@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  No android:packageNames on purpose: OEMs host the USSD dialog in different
+  packages (com.android.phone, dialer apps, Transsion/HiOS, MIUI telecom...).
+  Narrowing happens in code instead: the service is inert until the app arms
+  it by dialling, ignores its own UI / keyboard / launcher / SystemUI, and
+  only ever extracts one dialog shape (text + reply field/buttons).
+
+  flagRetrieveInteractiveWindows: lets the service see the USSD dialog even
+  when it is not the "active" window (common on OEM builds).
+  flagIncludeNotImportantViews: some OEM dialogs mark their text/buttons
+  not-important-for-accessibility, which would otherwise hide them.
+-->
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityEventTypes="typeWindowStateChanged|typeWindowContentChanged|typeWindowsChanged"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:accessibilityFlags="flagRetrieveInteractiveWindows|flagIncludeNotImportantViews"
+    android:canRetrieveWindowContent="true"
+    android:notificationTimeout="100"
+    android:description="@string/accessibility_service_description" />

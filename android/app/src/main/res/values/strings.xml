@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">USSD-UI</string>
+    <string name="accessibility_service_description">USSD-UI uses this only to read and respond to your phone\'s own USSD pop-up — the dialog that appears when you dial a code, whether through this app or the regular Phone app. It shows the options as buttons, types your replies into that same dialog and taps its own buttons, exactly as you would by hand. It does not read, store, or interact with any other app or screen on your device.</string>
+</resources>
